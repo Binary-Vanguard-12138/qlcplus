@@ -872,6 +872,7 @@ void VCSliderProperties::accept()
     m_slider->setPlaybackFlashEnable(m_flashButtonCheck->isChecked());
     m_slider->setPlaybackFlashKeySequence(m_flashInputWidget->keySequence());
     m_slider->setInputSource(m_flashInputWidget->inputSource(), VCSlider::flashButtonInputSourceId);
+    m_slider->setInputSource(m_flashInputWidget->inputSource(), VCSlider::sliderInputSourceId);
 
     /* Slider mode */
     if (m_slider->sliderMode() != m_sliderMode)
@@ -891,9 +892,15 @@ void VCSliderProperties::accept()
 
     if (m_slider->sliderMode() == VCSlider::Level)
     {
+        m_slider->setPlaybackFlashEnable(false);
         m_slider->setChannelsMonitorEnabled(m_monitorValuesCheck->isChecked());
         m_slider->setOverrideResetKeySequence(m_ovrResetSelWidget->keySequence());
         m_slider->setInputSource(m_ovrResetSelWidget->inputSource(), VCSlider::overrideResetInputSourceId);
+        m_slider->setInputSource(m_ovrResetSelWidget->inputSource(), VCSlider::sliderInputSourceId);
+    }
+    else
+    {
+        m_slider->setChannelsMonitorEnabled(false);
     }
 
     m_slider->setCaption(m_nameEdit->text());
@@ -911,7 +918,7 @@ void VCSliderProperties::accept()
         m_slider->setInvertedAppearance(true);
 
     /* External input */
-    m_slider->setInputSource(m_inputSelWidget->inputSource(), VCSlider::sliderInputSourceId);
+    // m_slider->setInputSource(m_inputSelWidget->inputSource(), VCSlider::sliderInputSourceId);
 
     /* Close dialog */
     QDialog::accept();
